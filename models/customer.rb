@@ -36,6 +36,12 @@ class Customer
     SqlRunner.run(sql)
   end
 
+  def delete()
+    sql = "DELETE FROM customers WHERE id = $1"
+    values = [@id]
+    SqlRunner.run(sql, values)
+  end
+
   def films()
     sql = "SELECT films.* FROM films INNER JOIN tickets ON films.id = tickets.film_id WHERE tickets.customer_id = $1"
     values = [@id]
@@ -64,7 +70,7 @@ class Customer
     values = [@id]
     tickets_array = SqlRunner.run(sql, values)
     tickets_total = tickets_array.map{|ticket_hash|Customer.new(ticket_hash)}
-    return tickets_total
+    return tickets_total.count()
   end
 
 

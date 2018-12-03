@@ -30,6 +30,12 @@ def update()
   SqlRunner.run(sql, values)
 end
 
+def delete()
+  sql = "DELETE FROM films WHERE id = $1"
+  values = [@id]
+  SqlRunner.run(sql, values)
+end
+
 def self.delete_all()
   sql = "DELETE FROM films"
   SqlRunner.run(sql)
@@ -48,7 +54,7 @@ def total_tickets_sold()
   values = [@id]
   tickets_sold_array = SqlRunner.run(sql, values)
   tickets_sold_total = tickets_sold_array.map{|ticket_sold_hash|Film.new(ticket_sold_hash)}
-  return tickets_sold_total
+  return tickets_sold_total.count
 end
 
 
